@@ -2,22 +2,25 @@ import java.util.*;
 public class ConnectFour {
 
 	public static void main(String[] args) {
+		int turnCount = 0;
 		Scanner stdin = new Scanner(System.in);
 		char[][] board = createBoard();
 		int playerTurn = 0; //player 0 is red, 1 is yellow
 		System.out.println("Red player goes first");
-		while (!checkWinner(board)) {
+		while (!checkWinner(board) & turnCount < 42) {
 			try {
 				if (playerTurn == 0) {
 					showBoard(board);
 					System.out.print("Drop a red disk at column (0 - 6):");
 					placeRed(board, stdin.nextInt());
+					turnCount++;
 					playerTurn = 1;
 				}
 				else if (playerTurn == 1) {
 					showBoard(board);
 					System.out.print("Drop a yellow disk at column (0 - 6):");
 					placeYellow(board, stdin.nextInt());
+					turnCount++;
 					playerTurn = 0;
 				}
 			}
@@ -30,12 +33,26 @@ public class ConnectFour {
 			}
 		}
 		showBoard(board);
-		if (playerTurn == 0) {
-			System.out.println("Yellow player wins");
+		if (turnCount == 42 & checkWinner(board)) {
+			if (playerTurn == 0) {
+				System.out.println("Yellow player wins");
+			}
+			else if (playerTurn == 1) {
+				System.out.println("Red player wins");
+			}
 		}
-		else if (playerTurn == 1) {
-			System.out.println("Red player wins");
+		else if (turnCount == 42 & !checkWinner(board)) {
+			System.out.print("No Winner");
 		}
+		else {
+			if (playerTurn == 0) {
+				System.out.println("Yellow player wins");
+			}
+			else if (playerTurn == 1) {
+				System.out.println("Red player wins");
+			}
+		}
+		
 
 	}
 	
@@ -55,6 +72,10 @@ public class ConnectFour {
 					yellow++;
 					red = 0;
 				}
+				else if (m[r][c] == ' ') {
+					yellow = 0;
+					red = 0;
+				}
 				if(red == 4 | yellow == 4) {
 					winner = true;
 				}
@@ -70,6 +91,10 @@ public class ConnectFour {
 				}
 				else if (m[r][c] == 'Y') {
 					yellow++;
+					red = 0;
+				}
+				else if (m[r][c] == ' ') {
+					yellow = 0;
 					red = 0;
 				}
 				if(red == 4 | yellow == 4) {
@@ -88,6 +113,10 @@ public class ConnectFour {
 				}
 				else if (m[r - i][c] == 'Y') {
 					yellow++;
+					red = 0;
+				}
+				else if (m[r - i][c] == ' ') {
+					yellow = 0;
 					red = 0;
 				}
 				if(red == 4 | yellow == 4) {
@@ -109,6 +138,10 @@ public class ConnectFour {
 					yellow++;
 					red = 0;
 				}
+				else if (m[r + i][c] == ' ') {
+					yellow = 0;
+					red = 0;
+				}
 				if(red == 4 | yellow == 4) {
 					winner = true;
 				}
@@ -128,6 +161,10 @@ public class ConnectFour {
 					yellow++;
 					red = 0;
 				}
+				else if (m[r + i][c] == ' ') {
+					yellow = 0;
+					red = 0;
+				}
 				if(red == 4 | yellow == 4) {
 					winner = true;
 				}
@@ -145,6 +182,10 @@ public class ConnectFour {
 				}
 				else if (m[r - i][c] == 'Y') {
 					yellow++;
+					red = 0;
+				}
+				else if (m[r - i][c] == ' ') {
+					yellow = 0;
 					red = 0;
 				}
 				if(red == 4 | yellow == 4) {
